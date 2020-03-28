@@ -1,0 +1,27 @@
+class Solution(object):
+    def exist(self, board, word):
+        """
+        :type board: List[List[str]]
+        :type word: str
+        :rtype: bool
+        """
+        #Fisrt we need to use backtracking
+        used_cell = set()
+
+        def search(word, i, j):
+            if not word:
+                return True
+            used_cell.add((i,j)) 
+            for row, col in [(i+1,j),(i,j+1),(i-1, j),(i,j-1)]:
+                if 0<=row<len(board) and 0<=col<len(board[0]) and (row, col) not in used_cell and board[row][col] == word[0]:
+                    if search(word[1:], row, col):
+                        return True
+            used_cell.remove((i, j)) #Backtracking, if we can not find the matched neighbor, we will give up this current cell.
+            return False
+            
+        for i in range(0, len(board)):
+            for j in range(0, len(board[0])):
+                if word[0] == board[i][j] and search(word[1:],i,j):
+                    return True
+        return False
+            
