@@ -1,0 +1,20 @@
+class Solution:
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        if not matrix or not matrix[0]: return False
+        row = 0
+        col = len(matrix[0])-1
+
+        def helper(row, col, matrix):
+            if matrix[row][col] == target:
+                return True
+            elif matrix[row][col] > target and col-1>=0:
+                return helper(row, col-1, matrix)
+            elif matrix[row][col] < target and row+1<len(matrix):
+                return helper(row+1, col, matrix)
+        
+        return True if helper(row, col, matrix) else False
