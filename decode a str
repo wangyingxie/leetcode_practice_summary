@@ -1,0 +1,29 @@
+class Solution(object):
+    def decodeString(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        res = ''
+        count = []
+        words = []
+        num = 0
+        for item in s:
+            print(count)
+            print(words)
+            if item.isdigit():
+                num = 10*num + int(item)
+            elif item == '[':
+                count.append(num)
+                words.append(res)
+                num = 0
+                res =''
+            elif item == ']':
+                freq = count.pop()
+                word = words.pop()
+                for i in range(freq):
+                    word += res
+                res = word
+            else:
+                res += item
+        return res
